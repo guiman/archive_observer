@@ -1,7 +1,7 @@
 module ArchiveExtensions
-  class Top5ContributedRepositories
-    def self.for(github_login)
-      user = GithubUser.find_by_login(github_login)
+  class TopContributedRepositories
+    def self.for(count: 5, login:)
+      user = GithubUser.find_by_login(login)
 
       results = GithubRepository.connection.select_all("
         SELECT github_repositories.full_name as name, count(github_pull_requests.id) as prs
@@ -10,7 +10,7 @@ module ArchiveExtensions
         WHERE github_pull_requests.github_user_id = #{user.id} AND github_pull_requests.action = 'opened'
         GROUP BY github_repositories.full_name
         ORDER BY prs desc
-        LIMIT 5")
+        LIMIT #{count}")
 
       results.map do |result|
         result["prs"] = result["prs"].to_i

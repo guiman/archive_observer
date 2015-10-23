@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Top 5 contributed repositories" do
+describe "Top contributed repositories" do
   it "returns a list of the top 5 repositories and the number of PRs to them" do
     user = GithubUser.create(login: "user_a")
 
@@ -24,6 +24,6 @@ describe "Top 5 contributed repositories" do
       { "name" => "full/name_1", "prs" => 1}
     ]
 
-    expect(ArchiveExtensions::Top5ContributedRepositories.for("user_a")).to eq(expected_result)
+    expect(ArchiveExtensions::TopContributedRepositories.for(count: 5, login: "user_a")).to eq(expected_result)
   end
 end
