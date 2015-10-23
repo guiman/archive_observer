@@ -11,5 +11,7 @@
 /log/*
 /archive_files/*
 !/archive_files/.keep
+/archive_processed_files/*
+!/archive_processed_files/.keep
 !/log/.keep
 /tmp
