@@ -1,4 +1,5 @@
 require_relative 'archive_extensions/languages'
+require_relative 'archive_extensions/language_activity'
 require_relative 'archive_extensions/pull_request'
 require_relative 'archive_extensions/top_5_contributed_repositories'
 
