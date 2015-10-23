@@ -1,0 +1,15 @@
+<h1><%= @user.login %></h1>
+
+<h3>Top 5 Repositories</h3>
+<ul>
+  <% ArchiveExtensions::TopContributedRepositories.for(login: @user.login).each do |repo| %>
+    <li><%= link_to repo.fetch("name"), "http://github.com/#{repo.fetch("name")}" %> - PR count: <%= repo.fetch("prs") %> </li>
+  <% end %>
+</ul>
+
+<h3>Languages</h3>
+<ul>
+  <% ArchiveExtensions::Languages.for(@user.login).each do |repo| %>
+    <li><%= repo.fetch("name") %> - PR count: <%= repo.fetch("prs") %> </li>
+  <% end %>
+</ul>

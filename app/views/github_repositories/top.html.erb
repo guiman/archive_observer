@@ -1,0 +1,7 @@
+<% @repositories.each do |repository| %>
+  <ul>
+    <li>Name: <%= link_to repository.full_name, "http://github.com/#{repository.full_name}" %></li>
+    <li>Language <%= repository.language.name %></li>
+  </ul>
+  <hr>
+<% end %>
