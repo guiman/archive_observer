@@ -1,0 +1,10 @@
+<h1><%= link_to @repository.full_name, "https://github.com/#{@repository.full_name}" %></h1>
+
+<h3>Top contributors (sorted by contributions)</h3>
+<div id="contributor">
+  <% @repository.contributors.each do |github_user| %>
+    <div class="contributor">
+      <span><%= link_to github_user.login, github_user_profile_path(github_user.login)  %></span>
+    </div>
+  <% end %>
+</div>

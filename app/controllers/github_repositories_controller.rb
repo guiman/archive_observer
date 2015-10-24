@@ -1,5 +1,9 @@
 class GithubRepositoriesController < ApplicationController
   def top
-    @repositories = ArchiveExtensions::TopActiveRepositories.for(count: params[:count])
+    @top_repositories = ArchiveExtensions::TopActiveRepositories.for(count: params[:count])
+  end
+
+  def show
+    @repository = GithubRepository.find(params[:repository])
   end
 end

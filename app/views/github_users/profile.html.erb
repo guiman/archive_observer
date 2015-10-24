@@ -1,4 +1,4 @@
-<h1><%= @user.login %></h1>
+<h1><%= link_to @user.login, "https://github.com/#{@user.login}" %></h1>
 
 <h3>Top 5 Repositories</h3>
 <ul>
