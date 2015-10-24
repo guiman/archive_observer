@@ -1,0 +1,33 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load('visualization', '1.1', {packages: ['line']});
+  google.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var lang_breakdown_data = JSON.parse('<%= chart_data_for(login).to_json.html_safe %>');
+    var languages = JSON.parse('<%= languages_for(login).to_json.html_safe %>');
+
+    var data = new google.visualization.DataTable();
+
+    data.addColumn('number', 'Month');
+
+    for (var index = 0; index < languages.length; ++index) {
+      data.addColumn('number', languages[index]);
+    }
+
+    data.addRows(lang_breakdown_data);
+
+    var options = {
+      chart: {
+        title: 'Activity Breakdown'
+      },
+      width: 700,
+      height: 300
+    };
+
+    var chart = new google.charts.Line(document.getElementById('line_chart'));
+
+    chart.draw(data, options);
+  }
+</script>
+<div id="line_chart"></div>

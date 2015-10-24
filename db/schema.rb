@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022183731) do
+ActiveRecord::Schema.define(version: 20151024142936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "github_pull_requests", force: :cascade do |t|
-    t.time     "event_timestamp"
     t.integer  "github_user_id"
     t.string   "action"
     t.boolean  "merged"
     t.integer  "github_repository_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.datetime "event_timestamp"
   end
 
   add_index "github_pull_requests", ["github_repository_id"], name: "index_github_pull_requests_on_github_repository_id", using: :btree
