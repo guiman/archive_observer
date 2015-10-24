@@ -1,6 +1,7 @@
 class GithubRepositoriesController < ApplicationController
   def top
-    @top_repositories = ArchiveExtensions::TopActiveRepositories.for(count: params[:count])
+    @language = Language.where("name ILIKE ?", params[:language]).first
+    @top_repositories = ArchiveExtensions::TopActiveRepositories.for(count: params[:count].to_i, language: @language)
   end
 
   def show

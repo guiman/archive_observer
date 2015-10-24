@@ -1,4 +1,4 @@
-<h1>Top <%= params[:count] %> repositories</h1>
+<h1>Top <%= params[:count] %> repositories <%= @language ? "in #{@language.name}" : '' %></h1>
 <% @top_repositories.each do |top_item| %>
   <% repository = top_item.fetch("repo") %>
   <% pr_count = top_item.fetch("prs") %>
