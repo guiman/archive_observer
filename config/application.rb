@@ -35,5 +35,6 @@ module ArchiveObserver
     config.autoload_paths += Dir["#{config.root}/lib/archive_extensions/**/"]
 
     require_relative '../lib/archive_extensions'
+    require_relative '../lib/archive_loader'
   end
 end
