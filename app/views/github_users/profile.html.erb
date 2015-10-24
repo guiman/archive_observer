@@ -8,8 +8,4 @@
 </ul>
 
 <h3>Languages</h3>
-<ul>
-  <% ArchiveExtensions::Languages.for(@user.login).each do |repo| %>
-    <li><%= repo.fetch("name") %> - PR count: <%= repo.fetch("prs") %> </li>
-  <% end %>
-</ul>
+<%= render partial: "languages", locals: { login: @user.login, limit: nil } %>
