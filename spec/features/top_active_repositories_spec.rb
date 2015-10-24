@@ -24,6 +24,14 @@ describe "Top active repositories" do
       end
     end
 
-    expect(ArchiveExtensions::TopActiveRepositories.for(count: 5)).to eq(repos)
+    expected_response = [
+      { "repo" => repos[4], "prs" => 14},
+      { "repo" => repos[3], "prs" => 13},
+      { "repo" => repos[2], "prs" => 12},
+      { "repo" => repos[1], "prs" => 11},
+      { "repo" => repos[0], "prs" => 10}
+    ]
+
+    expect(ArchiveExtensions::TopActiveRepositories.for(count: 5)).to eq(expected_response)
   end
 end

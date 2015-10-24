@@ -12,7 +12,12 @@ module ArchiveExtensions
 
       ids = results.map { |res| res.fetch("id") }
 
-      GithubRepository.where(id: ids)
+      repositories = GithubRepository.where(id: ids)
+
+      repositories.inject([]) do |acc,repo|
+        pr_count = results.detect { |res| res.fetch("id") == repo.id.to_s }.fetch("prs")
+        acc.unshift({ "repo" => repo, "prs" => pr_count.to_i })
+      end
     end
   end
 end
