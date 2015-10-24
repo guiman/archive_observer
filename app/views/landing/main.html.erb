@@ -1,0 +1,27 @@
+<h1>Archive Observer</h1>
+
+<p>
+  Welcome!<br><br>
+
+  This is Archive Observer, a weekend project that started to do some research on
+  <a href="https://www.githubarchive.org/">Github Archive</a> data and how we can
+  use it to build insight on development in general.<br>
+
+  Each hour we parse the latest Github Archive and refresh our database. So you should
+  expect new data every hour!<br>
+
+  Some of features we currently have:
+  <ul>
+    <li><%= link_to "Top 100 repositories", top_repositories_path(100) %></li>
+    <li><%= link_to "Top 100 users", top_users_path(100) %></li>
+    <li>For each user ( like me <%= link_to "guiman", github_user_profile_path("guiman") %>)</li>
+    <ul>
+      <li>Languages</li>
+      <li>Top 5 repos</li>
+      <li>Activity this year broken down by language (coming next!)</li>
+    </ul>
+  </ul>
+
+  Contributions are calculated by identifying PRs being opened by users, and languages
+  are identified by using the language determined as the main one for each repository.
+</p>
