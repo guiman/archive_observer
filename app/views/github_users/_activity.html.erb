@@ -5,7 +5,7 @@
 
   function drawChart() {
     var lang_breakdown_data = JSON.parse('<%= chart_data_for(login).to_json.html_safe %>');
-    var languages = JSON.parse('<%= languages_for(login).to_json.html_safe %>');
+    var languages = JSON.parse('<%= chart_languages_for(login).to_json.html_safe %>');
 
     var data = new google.visualization.DataTable();
 
