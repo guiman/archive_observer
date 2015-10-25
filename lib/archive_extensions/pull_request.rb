@@ -7,7 +7,7 @@ module ArchiveExtensions
       github_repository = GithubRepository.find_or_create_by(full_name: data.fetch("where").fetch("repo"),
         language: language)
 
-      if pr = GithubPullRequest.find_by(github_repository: github_repository, github_user: github_user)
+      if pr = GithubPullRequest.find_by(github_repository: github_repository, github_user: github_user, event_timestamp: Time.parse(data.fetch("when")))
         pr.update(event_timestamp: Time.parse(data.fetch("when")),
                  action: data.fetch("what").fetch("action"),
                  merged: data.fetch("what").fetch("merged"))
