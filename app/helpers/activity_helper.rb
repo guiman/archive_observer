@@ -3,9 +3,15 @@ module ActivityHelper
     languages = ArchiveExtensions::Languages.for(github_login)
 
     languages.map do |lang|
-      info = lang.fetch("name", "Unknown")
-      info ? info : "Unknown"
-    end.uniq
+      lang["name"] = "Unknown" if lang.fetch("name").nil?
+      lang
+    end
+  end
+
+  def chart_languages_for(github_login)
+    languages = languages_for(github_login)
+
+    languages.map { |lang| lang.fetch("name") }.uniq
   end
 
   def chart_data_for(github_login)

@@ -1,5 +1,5 @@
 <ul>
-  <% languages = ArchiveExtensions::Languages.for(login) %>
+  <% languages = languages_for(login) %>
   <% limit ? languages = languages.first(limit) : nil %>
   <% languages.each do |repo| %>
     <li><%= repo.fetch("name") %> - PR count: <%= repo.fetch("prs") %> </li>
