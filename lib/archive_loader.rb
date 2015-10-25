@@ -9,7 +9,7 @@ class ArchiveLoader
       ArchiveExtensions::PullRequest.parse(pull_request)
     end
 
-    processed_file_path = file.gsub(/archive_files/,'archive_processed_files')
+    processed_file_path = file.gsub(/archive_queued_files/,'archive_processed_files')
     File.rename file, processed_file_path
   end
 end
