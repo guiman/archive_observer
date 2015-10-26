@@ -1,32 +1,51 @@
 require 'rails_helper'
 
 describe "Language activity" do
+  subject { ArchiveExtensions::LanguageActivity }
   it "returns list of pull requests for a user in a certain language" do
     user = GithubUser.create(login: "user_a")
-    language = Language.create(name: "lang_5")
-    repo = GithubRepository.create(full_name: "full/name_5", language: language)
-    prs = []
+    repo = GithubRepository.create(full_name: "full/name",
+      language: Language.create(name: "lang_a"))
 
-    3.times do
-      prs << GithubPullRequest.create(github_user: user, github_repository: repo, action: "opened")
+    prs = 3.times.inject([]) do |acc, index|
+      acc << GithubPullRequest.create(github_user: user,
+        github_repository: repo, action: "opened")
     end
 
-    2.times do
-      GithubPullRequest.create(github_user: user, github_repository: repo, action: "closed")
-    end
-
-    4.times do |index|
-      pos = index + 1
-      language = Language.create(name: "lang_#{pos}")
-      repo = GithubRepository.create(full_name: "full/name_#{pos}", language: language)
-      pos.times do
-        GithubPullRequest.create(github_user: user, github_repository: repo, action: "opened")
-      end
-    end
-
-    feature_result = ArchiveExtensions::LanguageActivity.for(language: "lang_5", login: "user_a")
+    feature_result = subject.for(language: "lang_a", login: "user_a")
 
     expect(feature_result).to eq(prs)
     expect(prs.count).to eq(3)
+  end
+
+  it "doesn't consider other languages" do
+    user = GithubUser.create(login: "user_a")
+    Language.create(name: "lang_a")
+    repo = GithubRepository.create(full_name: "full/name",
+      language: Language.create(name: "lang_b"))
+
+    2.times do
+      GithubPullRequest.create(github_user: user,
+        github_repository: repo, action: "opened")
+    end
+
+    feature_result = subject.for(language: "lang_a", login: "user_a")
+
+    expect(feature_result).to be_empty
+  end
+
+  it "doesn't consider closed PRs" do
+    user = GithubUser.create(login: "user_a")
+    repo = GithubRepository.create(full_name: "full/name",
+      language: Language.create(name: "lang_a"))
+
+    2.times do
+      GithubPullRequest.create(github_user: user,
+        github_repository: repo, action: "closed")
+    end
+
+    feature_result = subject.for(language: "lang_a", login: "user_a")
+
+    expect(feature_result).to be_empty
   end
 end

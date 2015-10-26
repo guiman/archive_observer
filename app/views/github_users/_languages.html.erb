@@ -2,6 +2,6 @@
   <% languages = languages_for(login) %>
   <% limit ? languages = languages.first(limit) : nil %>
   <% languages.each do |repo| %>
-    <li><%= repo.fetch("name") %>: <%= repo.fetch("prs") %> </li>
+    <li><%= repo.fetch("language").name %>: <%= repo.fetch("prs") %> </li>
   <% end %>
 </ul>
