@@ -1,19 +1,41 @@
 module ArchiveExtensions
   class PullRequest
     def self.parse(data)
-      language = Language.find_or_create_by(name: data.fetch("where").fetch("language"))
-      github_user = GithubUser.find_or_create_by(login: data.fetch("who").fetch("login"),
-        avatar_url: data.fetch("who").fetch("avatar_url"))
-      github_repository = GithubRepository.find_or_create_by(full_name: data.fetch("where").fetch("repo"),
-        language: language)
+      language = self.parse_language(data)
 
-      if pr = GithubPullRequest.find_by(github_repository: github_repository, github_user: github_user, event_timestamp: Time.parse(data.fetch("when")))
+      github_user = self.parse_user(data)
+      github_repository = self.parse_repository(data, language)
+
+      self.parse_pull_request(data, github_user, github_repository)
+    end
+
+    def self.parse_language(data)
+      name = data.fetch("where").fetch("repo").fetch("language")
+      Language.find_or_create_by(name: name)
+    end
+
+    def self.parse_user(data)
+      login = data.fetch("who").fetch("login")
+      github_user = GithubUser.find_by(login: login)
+      return github_user unless github_user.nil?
+
+      GithubUser.create(login: login,
+        avatar_url: data.fetch("who").fetch("avatar_url"))
+    end
+
+    def self.parse_repository(data, language)
+      GithubRepository.find_or_create_by(full_name: data.fetch("where").fetch("repo").fetch("name"),
+        language: language)
+    end
+
+    def self.parse_pull_request(data, user, repository)
+      if pr = GithubPullRequest.find_by(github_repository: repository, github_user: user, event_timestamp: Time.parse(data.fetch("when")))
         pr.update(event_timestamp: Time.parse(data.fetch("when")),
                  action: data.fetch("what").fetch("action"),
                  merged: data.fetch("what").fetch("merged"))
       else
-        GithubPullRequest.create(github_repository: github_repository,
-          github_user: github_user, event_timestamp: Time.parse(data.fetch("when")),
+        GithubPullRequest.create(github_repository: repository,
+          github_user: user, event_timestamp: Time.parse(data.fetch("when")),
           action: data.fetch("what").fetch("action"), merged: data.fetch("what").fetch("merged"))
       end
     end
