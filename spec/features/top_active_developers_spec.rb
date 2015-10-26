@@ -27,4 +27,13 @@ describe "Top active developers" do
 
     expect(ArchiveExtensions::TopActiveDevelopers.for(count: 3)).to eq(expected_response)
   end
+
+  it "doesn't consider closed PRs" do
+    user_a = GithubUser.create(login: "user_a")
+
+    repo_a = GithubRepository.create(full_name: "#{user_a.login}/name")
+    GithubPullRequest.create(github_user: user_a, github_repository: repo_a, action: "closed")
+
+    expect(ArchiveExtensions::TopActiveDevelopers.for(count: 3)).to be_empty
+  end
 end

@@ -1,68 +1,57 @@
 require 'rails_helper'
 
 describe "Top active repositories" do
-  it "returns a list of the top 5 repositories and the number of PRs to them" do
+  subject { ArchiveExtensions::TopActiveRepositories }
+  it "returns a list of the top 3 repositories and the number of PRs to them" do
     user_a = GithubUser.create(login: "user_a")
-    user_b = GithubUser.create(login: "user_b")
+    ruby = Language.create(name: "ruby")
 
-    5.times do |index|
-      pos = index + 1
-      repo = GithubRepository.create(full_name: "full/name_#{pos}")
-      pos.times do
-        GithubPullRequest.create(github_user: user_a, github_repository: repo, action: "opened")
-      end
-    end
-
-    repos = []
-
-    5.times do |index|
-      pos = index + 10
-      repo = GithubRepository.create(full_name: "full/b_name_#{pos}")
-      repos << repo
-      pos.times do
-        GithubPullRequest.create(github_user: user_b, github_repository: repo, action: "opened")
-      end
-    end
+    # we will create 4 repos with each having 4, 3, 2 and 1 opened PRs
+    repos = create_repositories_with_prs(count: 4,
+      language: ruby, user: user_a, repo_status: "opened")
 
     expected_response = [
-      { "repo" => repos[4], "prs" => 14},
-      { "repo" => repos[3], "prs" => 13},
-      { "repo" => repos[2], "prs" => 12},
-      { "repo" => repos[1], "prs" => 11},
-      { "repo" => repos[0], "prs" => 10}
+      { "repo" => repos[3], "prs" => 4},
+      { "repo" => repos[2], "prs" => 3},
+      { "repo" => repos[1], "prs" => 2}
     ]
 
-    expect(ArchiveExtensions::TopActiveRepositories.for(count: 5)).to eq(expected_response)
+    expect(subject.for(count: 3)).to eq(expected_response)
   end
 
-  it "returns a list of the top 5 repositories in ruby and the number of PRs to them" do
+  it "returns a list of the top 3 repositories in ruby and the number of PRs to them" do
     user_a = GithubUser.create(login: "user_a")
     ruby = Language.create(name: "ruby")
     javascript = Language.create(name: "javascript")
-    repos = []
 
-    5.times do |index|
-      pos = index + 1
-      repo = GithubRepository.create(full_name: "full/name_#{pos}", language: ruby)
-      repos << repo
-      pos.times do
-        GithubPullRequest.create(github_user: user_a, github_repository: repo, action: "opened")
-      end
-    end
+    # we will create 4 repos with each having 4, 3, 2 and 1 opened PRs
+    repos = create_repositories_with_prs(count: 4,
+      language: ruby, user: user_a, repo_status: "opened")
 
-    repo = GithubRepository.create(full_name: "full/name_7", language: javascript)
-    7.times do
-      GithubPullRequest.create(github_user: user_a, github_repository: repo, action: "opened")
-    end
+    # here we create lots of activity on other language and make sure
+    # it wont appear
+    create_repositories_with_prs(count: 7,
+      language: javascript, user: user_a, repo_status: "opened")
 
     expected_response = [
-      { "repo" => repos[4], "prs" => 5},
       { "repo" => repos[3], "prs" => 4},
       { "repo" => repos[2], "prs" => 3},
       { "repo" => repos[1], "prs" => 2},
-      { "repo" => repos[0], "prs" => 1}
     ]
 
-    expect(ArchiveExtensions::TopActiveRepositories.for(count: 5, language: ruby)).to eq(expected_response)
+    expect(subject.for(count: 3, language: ruby)).to eq(expected_response)
+  end
+
+  def create_repositories_with_prs(count:,language:,user:,repo_status:)
+    count.times.inject([]) do |acc, index|
+      pos = index + 1
+      repo = GithubRepository.create(full_name: "full/name_#{pos}", language: language)
+      pos.times do
+        GithubPullRequest.create(github_user: user,
+          github_repository: repo, action: repo_status)
+      end
+
+      acc << repo
+    end
   end
 end
