@@ -3,7 +3,9 @@ module ActivityHelper
     languages = ArchiveExtensions::Languages.for(github_login)
 
     languages.map do |lang|
-      lang["language"] = Language.new(name: "Unknown") if lang.fetch("language").nil?
+      if lang.fetch("language").nil? || lang.fetch("language").name.nil?
+        lang["language"] = Language.new(name: "Unknown")
+      end
       lang
     end
   end
