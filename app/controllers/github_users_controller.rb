@@ -5,5 +5,10 @@ class GithubUsersController < ApplicationController
 
   def profile
     @user = GithubUser.find_by_login(params[:login])
+    if @user
+      render "profile"
+    else
+      render "missing_profile"
+    end
   end
 end
