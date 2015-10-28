@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028151200) do
+ActiveRecord::Schema.define(version: 20151028195826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,11 @@ ActiveRecord::Schema.define(version: 20151028151200) do
 
   add_index "languages", ["id"], name: "lang_id_idx", using: :btree
   add_index "languages", ["name"], name: "lang_name_idx", using: :btree
+
+  create_table "repository_rankings", id: false, force: :cascade do |t|
+    t.integer "github_repository_id"
+    t.integer "pull_request_count",   limit: 8
+  end
 
   add_foreign_key "github_pull_requests", "github_repositories"
   add_foreign_key "github_pull_requests", "github_users"

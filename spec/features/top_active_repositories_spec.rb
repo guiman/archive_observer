@@ -10,6 +10,8 @@ describe "Top active repositories" do
     repos = create_repositories_with_prs(count: 4,
       language: ruby, user: user_a, repo_status: "opened")
 
+    ArchiveExtensions::RepositoryRankingUpdate.update
+
     expected_response = [
       { "repo" => repos[3], "prs" => 4},
       { "repo" => repos[2], "prs" => 3},
@@ -32,6 +34,8 @@ describe "Top active repositories" do
     # it wont appear
     create_repositories_with_prs(count: 7,
       language: javascript, user: user_a, repo_status: "opened")
+
+    ArchiveExtensions::RepositoryRankingUpdate.update
 
     expected_response = [
       { "repo" => repos[3], "prs" => 4},
