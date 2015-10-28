@@ -6,8 +6,7 @@ module ArchiveExtensions
           SELECT github_repositories.id as id, count(github_pull_requests.id) as prs
           FROM github_repositories
           INNER JOIN github_pull_requests on github_pull_requests.github_repository_id = github_repositories.id
-          INNER JOIN languages on github_repositories.language_id = languages.id
-          WHERE github_pull_requests.action = 'opened' and language_id = #{language.id}
+          WHERE github_pull_requests.action = 'opened' and github_repositories.language_id = #{language.id}
           GROUP BY github_repositories.id
           ORDER BY prs desc
           LIMIT #{count}")
