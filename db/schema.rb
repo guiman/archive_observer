@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151024142936) do
+ActiveRecord::Schema.define(version: 20151028151200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20151024142936) do
     t.datetime "event_timestamp"
   end
 
+  add_index "github_pull_requests", ["action"], name: "pull_request_action_idx", using: :btree
   add_index "github_pull_requests", ["github_repository_id"], name: "index_github_pull_requests_on_github_repository_id", using: :btree
   add_index "github_pull_requests", ["github_user_id"], name: "index_github_pull_requests_on_github_user_id", using: :btree
 
@@ -36,6 +37,7 @@ ActiveRecord::Schema.define(version: 20151024142936) do
     t.datetime "updated_at",  null: false
   end
 
+  add_index "github_repositories", ["id"], name: "repo_id_idx", using: :btree
   add_index "github_repositories", ["language_id"], name: "index_github_repositories_on_language_id", using: :btree
 
   create_table "github_users", force: :cascade do |t|
@@ -45,11 +47,16 @@ ActiveRecord::Schema.define(version: 20151024142936) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "github_users", ["login"], name: "user_login_idx", using: :btree
+
   create_table "languages", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "languages", ["id"], name: "lang_id_idx", using: :btree
+  add_index "languages", ["name"], name: "lang_name_idx", using: :btree
 
   add_foreign_key "github_pull_requests", "github_repositories"
   add_foreign_key "github_pull_requests", "github_users"

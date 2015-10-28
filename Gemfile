@@ -12,8 +12,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'rspec-rails'
 gem 'sidekiq'
 
-# Use Unicorn as the app server
-gem 'unicorn'
+gem 'puma'
 
 group :development, :test do
   gem 'byebug'
