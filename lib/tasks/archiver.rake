@@ -1,4 +1,9 @@
 namespace :archiver do
+  desc "update repository ranking"
+  task :update_ranking => :environment do |t,args|
+    ArchiveExtensions::RepositoryRankingUpdate.update
+  end
+
   desc "load archive into database"
   task :load_archive => :environment do |t, args|
     Dir["#{Rails.root}/archive_files/*.json"].each do |file_path|
