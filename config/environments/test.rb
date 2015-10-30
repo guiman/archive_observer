@@ -39,4 +39,5 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  ActiveRecord::Base.logger = Logger.new File.open('log/test.log', 'a')
 end

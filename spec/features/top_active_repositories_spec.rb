@@ -13,12 +13,12 @@ describe "Top active repositories" do
     ArchiveExtensions::RepositoryRankingUpdate.update
 
     expected_response = [
-      { "repo" => repos[3], "prs" => 4},
-      { "repo" => repos[2], "prs" => 3},
-      { "repo" => repos[1], "prs" => 2}
+      RepositoryRanking.new(github_repository: repos[3], pull_request_count: 4),
+      RepositoryRanking.new(github_repository: repos[2], pull_request_count: 3),
+      RepositoryRanking.new(github_repository: repos[1], pull_request_count: 2)
     ]
 
-    expect(subject.for(count: 3)).to eq(expected_response)
+    expect(subject.for(count: 3).to_a).to eq(expected_response)
   end
 
   it "returns a list of the top 3 repositories in ruby and the number of PRs to them" do
@@ -38,12 +38,12 @@ describe "Top active repositories" do
     ArchiveExtensions::RepositoryRankingUpdate.update
 
     expected_response = [
-      { "repo" => repos[3], "prs" => 4},
-      { "repo" => repos[2], "prs" => 3},
-      { "repo" => repos[1], "prs" => 2},
+      RepositoryRanking.new(github_repository: repos[3], pull_request_count: 4),
+      RepositoryRanking.new(github_repository: repos[2], pull_request_count: 3),
+      RepositoryRanking.new(github_repository: repos[1], pull_request_count: 2)
     ]
 
-    expect(subject.for(count: 3, language: ruby)).to eq(expected_response)
+    expect(subject.for(count: 3, language: ruby).to_a).to eq(expected_response)
   end
 
   def create_repositories_with_prs(count:,language:,user:,repo_status:)

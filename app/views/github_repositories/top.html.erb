@@ -1,7 +1,7 @@
 <h1>Top <%= params[:count] %> repositories <%= @language ? "in #{@language.name}" : '' %></h1>
 <% @top_repositories.each do |top_item| %>
-  <% repository = top_item.fetch("repo") %>
-  <% pr_count = top_item.fetch("prs") %>
+  <% repository = top_item.github_repository %>
+  <% pr_count = top_item.pull_request_count %>
   <ul>
     <li>Name: <%= link_to repository.full_name, github_repository_path(repository.id) %></li>
     <li>Language: <%= repository.language.name %></li>
