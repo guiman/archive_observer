@@ -19,6 +19,9 @@ describe "Top active developers" do
     repo_c = GithubRepository.create(full_name: "#{user_c.login}/name")
     GithubPullRequest.create(github_user: user_c, github_repository: repo_c, action: "opened")
 
+
+    ArchiveExtensions::UserRankingUpdate.update
+
     expected_response = [
       { "user" => user_a, "prs" => 3},
       { "user" => user_b, "prs" => 2},
@@ -33,6 +36,8 @@ describe "Top active developers" do
 
     repo_a = GithubRepository.create(full_name: "#{user_a.login}/name")
     GithubPullRequest.create(github_user: user_a, github_repository: repo_a, action: "closed")
+
+    ArchiveExtensions::UserRankingUpdate.update
 
     expect(ArchiveExtensions::TopActiveDevelopers.for(count: 3)).to be_empty
   end

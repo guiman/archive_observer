@@ -6,6 +6,7 @@ require_relative 'archive_extensions/repository_ranking_update'
 require_relative 'archive_extensions/top_active_repositories'
 require_relative 'archive_extensions/top_active_developers'
 require_relative 'archive_extensions/top_contributed_repositories'
+require_relative 'archive_extensions/user_ranking_update'
 
 module ArchiveExtensions
 
