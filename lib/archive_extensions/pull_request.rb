@@ -29,15 +29,13 @@ module ArchiveExtensions
     end
 
     def self.parse_pull_request(data, user, repository)
-      if pr = GithubPullRequest.find_by(github_repository: repository, github_user: user, event_timestamp: Time.parse(data.fetch("when")))
-        pr.update(event_timestamp: Time.parse(data.fetch("when")),
-                 action: data.fetch("what").fetch("action"),
-                 merged: data.fetch("what").fetch("merged"))
-      else
-        GithubPullRequest.create(github_repository: repository,
-          github_user: user, event_timestamp: Time.parse(data.fetch("when")),
-          action: data.fetch("what").fetch("action"), merged: data.fetch("what").fetch("merged"))
-      end
+      GithubPullRequest.create(github_repository: repository,
+        github_user: user, event_timestamp: Time.parse(data.fetch("when")),
+        action: data.fetch("what").fetch("action"),
+        merged: data.fetch("what").fetch("merged"),
+        original_id: data.fetch("original_id"))
+    rescue ActiveRecord::RecordNotUnique
+      # not doing anything here for now
     end
   end
 end

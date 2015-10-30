@@ -9,6 +9,9 @@ class ArchiveLoader
       ArchiveExtensions::PullRequest.parse(pull_request)
     end
 
+    ArchiveExtensions::RepositoryRankingUpdate.update
+    ArchiveExtensions::UserRankingUpdate.update
+
     processed_file_path = file.gsub(/archive_queued_files/,'archive_processed_files')
     File.rename file, processed_file_path
   end
