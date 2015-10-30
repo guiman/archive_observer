@@ -1,5 +1,6 @@
 class CreateRepositoryRankingsView < ActiveRecord::Migration
   def self.up
+    drop_table repository_rankings
     execute <<-SQL
       CREATE MATERIALIZED VIEW repository_rankings AS
         SELECT github_repositories.id as github_repository_id, count(github_pull_requests.id) as pull_request_count
