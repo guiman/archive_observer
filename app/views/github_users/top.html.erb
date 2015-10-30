@@ -1,12 +1,10 @@
 <h1>Top <%= params[:count] %> users <%= @language ? "in #{@language.name}" : '' %></h1>
 <% @top_developers.each do |top_item| %>
-  <% user = top_item.fetch("user") %>
-  <% pr_count = top_item.fetch("prs") %>
+  <% user = top_item.github_user %>
+  <% pr_count = top_item.pull_request_count %>
   <ul>
     <li>Name: <%= link_to user.login, github_user_profile_path(user.login) %></li>
     <li>PR count: <%= pr_count %></li>
-    <li> Top 3 languages: </li>
-    <%= render partial: "languages", locals: { login: user.login, limit: 3 } %>
   </ul>
   <hr>
 <% end %>

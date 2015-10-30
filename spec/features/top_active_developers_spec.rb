@@ -23,12 +23,12 @@ describe "Top active developers" do
     ArchiveExtensions::UserRankingUpdate.update
 
     expected_response = [
-      { "user" => user_a, "prs" => 3},
-      { "user" => user_b, "prs" => 2},
-      { "user" => user_c, "prs" => 1}
+      UserRanking.new(github_user: user_a, pull_request_count: 3),
+      UserRanking.new(github_user: user_b, pull_request_count: 2),
+      UserRanking.new(github_user: user_c, pull_request_count: 1)
     ]
 
-    expect(ArchiveExtensions::TopActiveDevelopers.for(count: 3)).to eq(expected_response)
+    expect(ArchiveExtensions::TopActiveDevelopers.for(count: 3).to_a).to eq(expected_response)
   end
 
   it "doesn't consider closed PRs" do
