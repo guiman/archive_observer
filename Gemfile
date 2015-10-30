@@ -12,6 +12,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'rspec-rails'
 gem 'sidekiq'
 
+gem 'kaminari'
+
 gem 'puma'
 
 group :development, :test do
