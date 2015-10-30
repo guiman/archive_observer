@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030160949) do
+ActiveRecord::Schema.define(version: 20151030222231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,11 +24,13 @@ ActiveRecord::Schema.define(version: 20151030160949) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.datetime "event_timestamp"
+    t.integer  "original_id"
   end
 
   add_index "github_pull_requests", ["action"], name: "pull_request_action_idx", using: :btree
   add_index "github_pull_requests", ["github_repository_id"], name: "index_github_pull_requests_on_github_repository_id", using: :btree
   add_index "github_pull_requests", ["github_user_id"], name: "index_github_pull_requests_on_github_user_id", using: :btree
+  add_index "github_pull_requests", ["original_id"], name: "index_github_pull_requests_on_original_id", unique: true, using: :btree
 
   create_table "github_repositories", force: :cascade do |t|
     t.string   "full_name"
@@ -37,6 +39,7 @@ ActiveRecord::Schema.define(version: 20151030160949) do
     t.datetime "updated_at",  null: false
   end
 
+  add_index "github_repositories", ["full_name"], name: "index_github_repositories_on_full_name", unique: true, using: :btree
   add_index "github_repositories", ["id"], name: "repo_id_idx", using: :btree
   add_index "github_repositories", ["language_id"], name: "index_github_repositories_on_language_id", using: :btree
 
@@ -47,6 +50,7 @@ ActiveRecord::Schema.define(version: 20151030160949) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "github_users", ["login"], name: "index_github_users_login", unique: true, using: :btree
   add_index "github_users", ["login"], name: "user_login_idx", using: :btree
 
   create_table "languages", force: :cascade do |t|
