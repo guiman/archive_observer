@@ -24,7 +24,11 @@ module ArchiveExtensions
     end
 
     def self.parse_repository(data, language)
-      GithubRepository.find_or_create_by(full_name: data.fetch("where").fetch("repo").fetch("name"),
+      repo_name = data.fetch("where").fetch("repo").fetch("name")
+      repository = GithubRepository.where("full_name ILIKE ?", repo_name).first
+      return repository unless repository.nil?
+
+      GithubRepository.find_or_create_by(full_name: repo_name,
         language: language)
     end
 
