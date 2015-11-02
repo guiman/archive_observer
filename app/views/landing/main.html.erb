@@ -10,12 +10,13 @@
   Each hour we parse the latest Github Archive and refresh our database. So you should
   expect new data every hour!<br>
 
-  <strong>This is still under heave development, and the data is just a small sample</strong>
+  <strong>I've started work on October, so please bear with me until I can catchup with previouse months</strong><br>
 
   Some of features we currently have:
   <ul>
     <li><%= link_to "Top 100 repositories", top_repositories_path(100) %></li>
     <li><%= link_to "Top 100 users", top_users_path(100) %></li>
+    <li>Top repositories filtered by language, like <%= link_to "Ruby", top_repositories_path(100, language: "ruby") %></li>
     <li>For each user</li>
     <ul>
       <li>Languages</li>
