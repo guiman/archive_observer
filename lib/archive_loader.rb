@@ -9,7 +9,7 @@ class ArchiveLoader
     js = Zlib::GzipReader.new(gz).read
 
     user_insert_template = "INSERT INTO github_users (login, created_at, updated_at) VALUES ('%{login}',now(),now())"
-    language_insert_template = "INSERT INTO languages (name,created_at,updated_at) VALUES ('%{language}', now(),now());"
+    language_insert_template = "INSERT INTO languages (name,created_at,updated_at) VALUES ('%{name}', now(),now());"
     repository_insert_template = "INSERT INTO github_repositories (full_name,language_id,fork,created_at,updated_at) VALUES ('%{full_name}', (SELECT id FROM languages WHERE languages.name ILIKE '%{repository_language}'), %{fork}, now(),now());"
     pr_insert_template = "INSERT INTO github_pull_requests (action,merged,original_id,event_timestamp,github_user_id, github_repository_id,created_at,updated_at) VALUES ('%{action}','%{merged}', %{original_id}, '%{event_timestamp}', (SELECT id FROM github_users WHERE github_users.login = '%{user_login}'), (SELECT id FROM github_repositories WHERE github_repositories.full_name = '%{repository_full_name}'), now(),now());"
 
@@ -30,7 +30,7 @@ class ArchiveLoader
         login: event.fetch("actor").fetch("login")
       }
       language_insert_data = {
-        language: repo.fetch("language")
+        name: repo.fetch("language")
       }
       repository_insert_data = {
         full_name: repo.fetch("full_name"),
@@ -51,8 +51,6 @@ class ArchiveLoader
       repository_inserts << repository_insert_template % repository_insert_data
       pr_inserts << pr_insert_template % pr_insert_data
     end
-
-    byebug
 
     user_inserts.each do |insert|
       begin
