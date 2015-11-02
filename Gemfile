@@ -15,6 +15,7 @@ gem 'sidekiq'
 gem 'kaminari'
 
 gem 'puma'
+gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
   gem 'byebug'
