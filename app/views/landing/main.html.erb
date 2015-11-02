@@ -25,6 +25,13 @@
     </ul>
   </ul>
 
+  Try finding someone here by github login:<br>
+  <%= form_for GithubUser.new, url: {action: "user_profile"}, method: "get" do |form| %>
+    <%= form.text_field :login %>
+    <input name="commit" type="submit" value="Show Profile" />
+  <% end %>
+  <br>
+
   Contributions are calculated by identifying PRs being opened by users, and languages
   are identified by using the language determined as the main one for each repository.
 </p>
