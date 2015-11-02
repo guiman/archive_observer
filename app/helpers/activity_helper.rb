@@ -25,7 +25,7 @@ module ActivityHelper
     end
 
     (1..12).to_a.map do |month|
-      res = [month]
+      res = [Date::MONTHNAMES[month]]
       languages_breakdown_data.each do |lang, breakdown|
         value = breakdown.detect { |b| b.fetch("month") == month }
         prs = value ? value.fetch("prs") : 0

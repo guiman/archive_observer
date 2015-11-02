@@ -9,7 +9,7 @@
 
     var data = new google.visualization.DataTable();
 
-    data.addColumn('number', 'Month');
+    data.addColumn('string', 'Month');
 
     for (var index = 0; index < languages.length; ++index) {
       data.addColumn('number', languages[index]);
@@ -21,7 +21,6 @@
       chart: {
         title: 'Activity Breakdown'
       },
-      width: 700,
       height: 300
     };
 
