@@ -27,12 +27,12 @@ describe "Top active repositories" do
     javascript = Language.create(name: "javascript")
 
     # we will create 4 repos with each having 4, 3, 2 and 1 opened PRs
-    repos = create_repositories_with_prs(count: 4,
+    repos = create_repositories_with_prs(count: 4, repos_prefix: "correct",
       language: ruby, user: user_a, repo_status: "opened")
 
     # here we create lots of activity on other language and make sure
     # it wont appear
-    create_repositories_with_prs(count: 7,
+    create_repositories_with_prs(count: 7, repos_prefix: "incorrect",
       language: javascript, user: user_a, repo_status: "opened")
 
     ArchiveExtensions::RepositoryRankingUpdate.update
@@ -46,10 +46,10 @@ describe "Top active repositories" do
     expect(subject.for(count: 3, language: ruby).to_a).to eq(expected_response)
   end
 
-  def create_repositories_with_prs(count:,language:,user:,repo_status:)
+  def create_repositories_with_prs(count:,language:,user:,repo_status:, repos_prefix:'')
     count.times.inject([]) do |acc, index|
       pos = index + 1
-      repo = GithubRepository.create(full_name: "full/name_#{pos}", language: language)
+      repo = GithubRepository.create(full_name: "full/name_#{repos_prefix}#{pos}", language: language)
       pos.times do
         GithubPullRequest.create(github_user: user,
           github_repository: repo, action: repo_status)
