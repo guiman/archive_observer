@@ -2,8 +2,15 @@
 <p>
   Oops looks like we could not find your profile.<br>
   Most likely this means that we dont have enough data from the archives<br>
-  to show your activity. But don't dispair, we will get ther!<br>
+  to show your activity. But don't dispair, we will get there!<br>
   <br>
   Sorry for the inconvenience!
-  <%= link_to "Back to homepage", root_path %>
 </p>
+
+<%= link_to "Back to homepage", root_path %>
+<br>
+Or try finding the user again:
+<%= form_for GithubUser.new, url: {action: "user_profile", controller: "landing"}, method: "get" do |form| %>
+  <%= form.text_field :login, value: params[:login] %>
+  <input name="commit" type="submit" value="Show Profile" />
+<% end %>
