@@ -7,8 +7,5 @@
   <% end %>
 </ul>
 
-<h3>Languages</h3>
-<span class="help">Next to each language is the total number of PRs to repo with tha language</span>
 <%= render partial: "languages", locals: { login: @user.login, limit: nil } %>
-
 <%= render partial: "activity", locals: { login: @user.login, limit: nil } %>
