@@ -9,6 +9,7 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
+gem 'responders'
 gem 'rspec-rails'
 gem 'sidekiq'
 

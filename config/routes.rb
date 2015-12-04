@@ -7,4 +7,8 @@ Rails.application.routes.draw do
 
   get "/repositories/top/:count" => "github_repositories#top", as: "top_repositories"
   get "/repository/:repository" => "github_repositories#show", as: "github_repository"
+
+  namespace "api" do
+    get "/user/:handle" => "users#user"
+  end
 end
