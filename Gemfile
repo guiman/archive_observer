@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'responders'
 gem 'rspec-rails'
 gem 'sidekiq'
+gem "google_visualr", '>= 2.5'
 
 gem 'kaminari'
 
