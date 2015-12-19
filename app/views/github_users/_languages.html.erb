@@ -1,9 +1,5 @@
 <h3>Languages</h3>
 <span class="help">Next to each language is the total number of PRs to repo with the language</span>
-<ul>
-  <% languages = languages_for(login) %>
-  <% limit ? languages = languages.first(limit) : nil %>
-  <% languages.each do |repo| %>
-    <li><%= repo.fetch("language").name %>: <%= repo.fetch("prs") %> </li>
-  <% end %>
-</ul>
+
+<div id="bar_chart"></div>
+<%= render_chart(chart, 'bar_chart') %>

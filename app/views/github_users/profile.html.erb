@@ -7,5 +7,5 @@
   <% end %>
 </ul>
 
-<%= render partial: "languages", locals: { login: @user.login, limit: nil } %>
+<%= render partial: "languages", locals: { chart: Chart::GithubUserTopLanguages.new(@user.login).chart } %>
 <%= render partial: "activity", locals: { chart: Chart::GithubUserActivity.new(@user.login).chart } %>
