@@ -30,7 +30,7 @@ class ArchiveLoader
         login: event.fetch("actor").fetch("login")
       }
 
-      language_name = repo.fetch("language", "Unknown")
+      language_name = repo.fetch("language", "Unknown") || "Unknown"
       language_insert_data = {
         name: (language_name.empty? || language_name == "null")  ? "Unknown" : language_name
       }
