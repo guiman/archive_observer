@@ -1,13 +1,13 @@
 module ArchiveExtensions
   class TopContributedRepositories
-    def self.for(count: 5, login:)
+    def self.for(count: 5, login:, year: Time.now.year)
       user = GithubUser.find_by_login(login)
 
       results = GithubRepository.connection.select_all("
         SELECT github_repositories.id as id, count(github_pull_requests.id) as prs
         FROM github_repositories
         INNER JOIN github_pull_requests on github_pull_requests.github_repository_id = github_repositories.id
-        WHERE github_pull_requests.github_user_id = #{user.id} AND github_pull_requests.action = 'opened'
+        WHERE github_pull_requests.github_user_id = #{user.id} AND github_pull_requests.action = 'opened' AND Extract(year from github_pull_requests.event_timestamp) = '#{year}'
         GROUP BY github_repositories.id
         ORDER BY prs desc
         LIMIT #{count}")
