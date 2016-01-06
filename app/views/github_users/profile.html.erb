@@ -1,5 +1,9 @@
 <h1><%= link_to @user.login, "https://github.com/#{@user.login}" %></h1>
 
+<%= render partial: "languages", locals: { chart: Chart::GithubUserTopLanguages.new(@user.login).chart } %>
+
+<h2><%= Time.now.year%> specific data</h2>
+<%= render partial: "activity", locals: { user_activity: Chart::GithubUserActivity.new(@user.login) } %>
 <h3>Top 5 Repositories</h3>
 <ul>
   <% ArchiveExtensions::TopContributedRepositories.for(login: @user.login).each do |repo| %>
@@ -7,5 +11,3 @@
   <% end %>
 </ul>
 
-<%= render partial: "languages", locals: { chart: Chart::GithubUserTopLanguages.new(@user.login).chart } %>
-<%= render partial: "activity", locals: { user_activity: Chart::GithubUserActivity.new(@user.login) } %>
