@@ -8,4 +8,4 @@
 </ul>
 
 <%= render partial: "languages", locals: { chart: Chart::GithubUserTopLanguages.new(@user.login).chart } %>
-<%= render partial: "activity", locals: { chart: Chart::GithubUserActivity.new(@user.login).chart } %>
+<%= render partial: "activity", locals: { user_activity: Chart::GithubUserActivity.new(@user.login) } %>

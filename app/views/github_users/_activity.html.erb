@@ -1,3 +1,3 @@
-<h3>Activity Breakdown</h3>
+<h3>Activity Breakdown for <%= user_activity.year_to_display %></h3>
 <div id="chart"></div>
-<%= render_chart(chart, 'chart') %>
+<%= render_chart(user_activity.chart, 'chart') %>

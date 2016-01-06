@@ -2,8 +2,11 @@ module Chart
   class GithubUserActivity
     MONTHS=(1..12).to_a
 
-    def initialize(github_login)
+    attr_reader :year_to_display
+
+    def initialize(github_login, year = Time.now.year)
       @github_login = github_login
+      @year_to_display = year
     end
 
     def languages
@@ -49,7 +52,7 @@ module Chart
     def all_languages_monthly_activity
       languages.inject({}) do |acc, language|
         language_name = language.fetch("language").name
-        breakdown = ArchiveExtensions::LanguageBreakdown.for(login: @github_login, language: language_name)
+        breakdown = ArchiveExtensions::LanguageBreakdown.for(login: @github_login, language: language_name, year: @year_to_display)
         acc[language_name] = breakdown
         acc
       end
