@@ -1,0 +1,8 @@
+<h1> Monthly Selection </h1>
+<p> Criteria: JavaScript, Ruby or CSS between 1 - 10 PRs </p>
+<% @users.each do |login| %>
+  <ul>
+    <li>Name: <%= link_to login, github_user_profile_path(login) %></li>
+  </ul>
+  <hr>
+<% end %>
