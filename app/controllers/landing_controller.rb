@@ -20,10 +20,10 @@ class LandingController < ApplicationController
     current_month = Time.now.month
     prs_range = (1..10)
 
-    @users = GithubUser.where("reachable = ? and location is not null", true).order("RANDOM()").limit(500).pluck(:login).select do |github_login|
+    @users = GithubUser.where("reachable = ? and location is not null", true).order("RANDOM()").limit(500).select do |user|
       lang_data = languages.inject({}) do |acc, language|
         language_name = language.name
-        breakdown = ArchiveExtensions::LanguageBreakdown.for(login: github_login, language: language_name)
+        breakdown = ArchiveExtensions::LanguageBreakdown.for(login: user.login, language: language_name)
 
         acc[language_name] = breakdown.detect(Proc.new { Hash.new }) do |data|
           data.fetch("month") == current_month
