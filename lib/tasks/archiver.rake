@@ -12,4 +12,20 @@ namespace :archiver do
     date_and_hour = "#{date}-#{hour}"
     ArchiveLoader.perform(date_and_hour)
   end
+
+  desc "add location to users"
+  task :add_location, [:github_token] => :environment do |t, args|
+    client = Octokit::Client.new({ access_token: args[:github_token] })
+    limit_reached = false
+
+    GithubUser.where(reachable: true, location: nil).each do |user|
+      begin
+        ArchiveUserLocation.update(user, client)
+      rescue Octokit::TooManyRequests
+        limit_reached = true
+      end
+
+      break if limit_reached
+    end
+  end
 end

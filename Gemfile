@@ -18,6 +18,7 @@ gem 'kaminari'
 
 gem 'puma'
 gem 'yajl-ruby', require: 'yajl'
+gem 'octokit'
 
 group :development, :test do
   gem 'byebug'
