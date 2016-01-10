@@ -5,7 +5,7 @@
     <li>Name: <%= link_to user.login, github_user_profile_path(user.login) %></li>
     <li>Location: <%= user.location %></li>
     <% if linkedin_link = LinkedinProfile.new(user.login).link %>
-      <li>Linkedin page: <%= linkedin_link %></li>
+      <li>Linkedin page: <%= link_to linkedin_link, linkedin_link %></li>
     <% end %>
   </ul>
   <hr>
