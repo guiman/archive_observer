@@ -2,7 +2,7 @@
 
 <%= render partial: "languages", locals: { chart: Chart::GithubUserTopLanguages.new(@user.login).chart } %>
 
-<h2><%= Time.now.year%> specific data</h2>
+<h2><%= @year %> specific data</h2>
 <%= render partial: "activity", locals: { user_activity: Chart::GithubUserActivity.new(@user.login, @year) } %>
 <h3>Top 5 Repositories</h3>
 <ul>
