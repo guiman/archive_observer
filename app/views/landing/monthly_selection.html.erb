@@ -1,5 +1,5 @@
 <h1> Monthly Selection </h1>
-<p> Criteria: JavaScript, Ruby or CSS between 1 - 10 PRs, somewhere in London or UK </p>
+<p> Criteria: JavaScript, Ruby or CSS between 1 - 15 PRs, somewhere in <%= @alternative_location %> or UK </p>
 <% @users.each do |user| %>
   <ul>
     <li>Name: <%= link_to user.login, github_user_profile_path(user.login) %></li>
