@@ -38,6 +38,7 @@ module ArchiveObserver
     require_relative '../lib/archive_extensions'
     require_relative '../lib/archive_loader'
     require_relative '../lib/archive_user_location'
+    require_relative '../lib/linkedin_profile'
     require_relative '../lib/chart'
   end
 end
