@@ -21,8 +21,8 @@ class LandingController < ApplicationController
     @alternative_location = params["location"] || "London"
     prs_range = (1..15)
 
-    @users = GithubUser.where("reachable = ? and location is not null and ( location ilike ? or location ilike ?)",
-      true, "%UK%", "%#{@alternative_location}%").order("RANDOM()").limit(500).select do |user|
+    @users = GithubUser.where("reachable = ? and location is not null and location ilike ?",
+      true, "%#{@alternative_location}%").order("RANDOM()").limit(500).select do |user|
       lang_data = languages.inject({}) do |acc, language|
         language_name = language.name
         breakdown = ArchiveExtensions::LanguageBreakdown.for(login: user.login, language: language_name)
