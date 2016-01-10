@@ -20,7 +20,7 @@ class LandingController < ApplicationController
     current_month = Time.now.month
     prs_range = (1..10)
 
-    @users = GithubUser.order("RANDOM()").limit(2_500).pluck(:login).select do |github_login|
+    @users = GithubUser.where("reachable = ? and location is not null", true).order("RANDOM()").limit(500).pluck(:login).select do |github_login|
       lang_data = languages.inject({}) do |acc, language|
         language_name = language.name
         breakdown = ArchiveExtensions::LanguageBreakdown.for(login: github_login, language: language_name)
