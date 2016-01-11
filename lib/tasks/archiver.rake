@@ -28,4 +28,15 @@ namespace :archiver do
       break if limit_reached
     end
   end
+
+  desc "add linkedin_link to users"
+  task :add_linkedin_link => :environment do |t, args|
+    GithubUser.where(reachable: true, linkedin_link: nil).each do |user|
+      begin
+        linkedin_profile = LinkedinProfile.new(user.login)
+        user.update(linkedin_link: linkedin_profile.link) if linkedin_profile.verify_link
+      rescue Excention
+      end
+    end
+  end
 end
