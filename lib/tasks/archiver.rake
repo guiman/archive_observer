@@ -31,7 +31,7 @@ namespace :archiver do
 
   desc "add linkedin_link to users"
   task :add_linkedin_link => :environment do |t, args|
-    GithubUser.where(reachable: true, linkedin_link: nil).each do |user|
+    GithubUser.where(reachable: true, linkedin_link: nil).limit(500).each do |user|
       begin
         linkedin_profile = LinkedinProfile.new(user.login)
 
