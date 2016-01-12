@@ -34,7 +34,11 @@ namespace :archiver do
     GithubUser.where(reachable: true, linkedin_link: nil).each do |user|
       begin
         linkedin_profile = LinkedinProfile.new(user.login)
-        user.update(linkedin_link: linkedin_profile.link) if linkedin_profile.verify_link
+
+        link = "not_available"
+        link = linkedin_profile.link if linkedin_profile.verify_link
+
+        user.update(linkedin_link: link)
       rescue Excention
       end
     end
