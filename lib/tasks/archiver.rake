@@ -35,8 +35,7 @@ namespace :archiver do
       begin
         linkedin_profile = LinkedinProfile.new(user.login)
 
-        link = "not_available"
-        link = linkedin_profile.link if linkedin_profile.verify_link
+        link = linkedin_profile.verify_link ? linkedin_profile.link : "not_available"
 
         user.update(linkedin_link: link)
       rescue Excention
