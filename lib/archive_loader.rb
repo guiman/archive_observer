@@ -37,7 +37,7 @@ class UserHandler
 end
 
 class RepositoryHandler
-  TEMPLATE = "INSERT INTO github_repositories (full_name,language_id,created_at,updated_at) VALUES ('%{full_name}', (SELECT id FROM languages WHERE languages.name ILIKE '%{repository_language}'), now(),now());"
+  TEMPLATE = "INSERT INTO github_repositories (full_name,fork,language_id,created_at,updated_at) VALUES ('%{full_name}', %{fork}, (SELECT id FROM languages WHERE languages.name ILIKE '%{repository_language}'), now(),now());"
   attr_reader :language
 
   def initialize(data, language)
@@ -49,9 +49,14 @@ class RepositoryHandler
     @data.fetch("full_name")
   end
 
+  def forked
+    @data.fetch("fork")
+  end
+
   def sql
     TEMPLATE % {
       full_name: full_name,
+      fork: forked,
       repository_language: language.name
     }
   end
