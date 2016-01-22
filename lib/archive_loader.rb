@@ -102,7 +102,9 @@ end
 
 class ArchiveLoader
   def self.perform(timestamp)
-    gz = open("http://data.githubarchive.org/#{timestamp}.json.gz")
+    url = "http://data.githubarchive.org/#{timestamp}.json.gz"
+    p "Fetching #{url}"
+    gz = open(url)
     js = Zlib::GzipReader.new(gz).read
 
     import_by_the_old_method(js)
