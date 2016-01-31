@@ -4,10 +4,18 @@
 
 <h2><%= @year %> specific data</h2>
 <%= render partial: "activity", locals: { user_activity: Chart::GithubUserActivity.new(@user.login, @year) } %>
+
 <h3>Top 5 Repositories</h3>
 <ul>
   <% ArchiveExtensions::TopContributedRepositories.for(login: @user.login, year: @year).each do |repo| %>
     <li><%= link_to repo.fetch("repo").full_name, github_repository_path(repo.fetch("repo").id) %> - PR count: <%= repo.fetch("prs") %> </li>
+  <% end %>
+</ul>
+
+<h3>Similar developers</h3>
+<ul>
+  <% ArchiveExtensions::SimilarUsers.calculate(login: @user.login, year: @year, language_threshold: 40.0).each do |user| %>
+    <li><%= link_to user.login, github_user_profile_path(user.login) %></li>
   <% end %>
 </ul>
 
