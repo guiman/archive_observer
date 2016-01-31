@@ -7,7 +7,7 @@ module ArchiveExtensions
       # then add them to the results
       ArchiveExtensions::TopContributedRepositories.for(login: login, count: 5).map do |contributed_repo|
         repo = contributed_repo.fetch("repo")
-        repo.contributors.select do |contributor|
+        repo.all_contributors.select do |contributor|
           contributor.login != login && ArchiveExtensions::CompareUsers.
             calculate_language_difference(login, contributor.login) <= language_threshold
         end
