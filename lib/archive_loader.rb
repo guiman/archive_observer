@@ -120,7 +120,8 @@ class ArchiveLoader
     pr_inserts = []
 
     Yajl::Parser.parse(js) do |event|
-      next unless event.fetch("type") == "PullRequestEvent"
+      next unless event.fetch("type") == "PullRequestEvent" &&
+        event.fetch("payload").fetch("action") == "opened"
 
       language = LanguageHandler.new(event)
       user = UserHandler.new(event)
