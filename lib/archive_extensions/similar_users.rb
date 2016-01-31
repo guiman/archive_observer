@@ -11,7 +11,7 @@ module ArchiveExtensions
           contributor.login != login && ArchiveExtensions::CompareUsers.
             calculate_language_difference(login, contributor.login) <= language_threshold
         end
-      end.flatten
+      end.flatten.uniq { |user| user.login }
     end
   end
 end
