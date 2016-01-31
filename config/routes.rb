@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   namespace "api" do
     get "/user/:handle" => "users#user"
+    get "/user/:handle/similar" => "users#similar_users"
   end
 end
