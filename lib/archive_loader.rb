@@ -7,7 +7,7 @@ class LanguageHandler
   TEMPLATE = "INSERT INTO languages (name,created_at,updated_at) VALUES ('%{name}', now(),now());"
 
   def initialize(data)
-    @data = data.fetch("payload").fetch("pull_request").fetch("base").fetch("repo")
+    @data = data.fetch("payload").fetch("pull_request").fetch("head").fetch("repo")
   end
 
   def name
@@ -41,7 +41,7 @@ class RepositoryHandler
   attr_reader :language
 
   def initialize(data, language)
-    @data = data.fetch("payload").fetch("pull_request").fetch("base").fetch("repo")
+    @data = data.fetch("payload").fetch("pull_request").fetch("head").fetch("repo")
     @language = language
   end
 
