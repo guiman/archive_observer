@@ -8,6 +8,7 @@ require_relative 'archive_extensions/top_contributed_repositories'
 require_relative 'archive_extensions/user_ranking_update'
 require_relative 'archive_extensions/compare_users'
 require_relative 'archive_extensions/similar_users'
+require_relative 'archive_extensions/user_activity'
 
 module ArchiveExtensions
 

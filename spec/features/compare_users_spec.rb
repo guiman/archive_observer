@@ -37,7 +37,8 @@ describe "Comparing users" do
         acc
       end
 
-      expect(ArchiveExtensions::CompareUsers.calculate_language_difference("user_a", "user_b")).to eq(0.0)
+      difference = ArchiveExtensions::CompareUsers.calculate_difference("user_a", "user_b")
+      expect(difference.fetch(:language_difference)).to eq(0.0)
     end
 
     it "returns 100 difference between a and b" do
@@ -75,7 +76,8 @@ describe "Comparing users" do
         acc
       end
 
-      expect(ArchiveExtensions::CompareUsers.calculate_language_difference("user_a", "user_b")).to eq(100.0)
+      difference = ArchiveExtensions::CompareUsers.calculate_difference("user_a", "user_b")
+      expect(difference.fetch(:language_difference)).to eq(100.0)
     end
   end
 end

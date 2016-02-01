@@ -53,6 +53,7 @@ GEM
     coffee-script-source (1.9.1.1)
     connection_pool (2.2.0)
     debug_inspector (0.0.2)
+    descriptive_statistics (2.4.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.6.0)
@@ -179,6 +180,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  descriptive_statistics (~> 2.4.0)
   google_visualr (>= 2.5)
   jbuilder (~> 2.0)
   kaminari

@@ -20,6 +20,7 @@ gem 'puma'
 gem 'yajl-ruby', require: 'yajl'
 gem 'octokit'
 gem 'open_uri_redirections'
+gem 'descriptive_statistics', '~> 2.4.0', :require => 'descriptive_statistics/safe'
 
 group :development, :test do
   gem 'byebug'
