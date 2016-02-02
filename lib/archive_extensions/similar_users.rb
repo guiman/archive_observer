@@ -8,10 +8,11 @@ module ArchiveExtensions
       ArchiveExtensions::TopContributedRepositories.for(login: login, count: 5).map do |contributed_repo|
         repo = contributed_repo.fetch("repo")
         repo.all_contributors.select do |contributor|
-          difference = ArchiveExtensions::CompareUsers.calculate_difference(login, contributor.login)
+          language_difference = ArchiveExtensions::CompareUsers.calculate_language_difference(login, contributor.login)
+          activity_difference = ArchiveExtensions::CompareUsers.calculate_activity_difference(login, contributor.login)
           contributor.login != login &&
-            difference.fetch(:language_difference) <= language_threshold &&
-            difference.fetch(:activity_difference) <= language_threshold
+            language_difference <= language_threshold &&
+            activity_difference <= activity_threshold
         end
       end.flatten.uniq { |user| user.login }
     end
