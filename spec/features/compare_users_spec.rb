@@ -37,10 +37,10 @@ describe "Comparing users" do
         acc
       end
 
-      expect(ArchiveExtensions::CompareUsers.calculate_language_difference("user_a", "user_b")).to eq(0.0)
+      expect(ArchiveExtensions::CompareUsers.calculate_language_similarity(user_a: "user_a", user_b: "user_b")).to eq(100.0)
     end
 
-    it "returns 100 difference between a and b" do
+    it "returns 0 similarity between a and b" do
       user = GithubUser.create(login: "user_a")
 
       languages = 3.times.inject({}) do |acc, index|
@@ -75,7 +75,7 @@ describe "Comparing users" do
         acc
       end
 
-      expect(ArchiveExtensions::CompareUsers.calculate_language_difference("user_a", "user_b")).to eq(100.0)
+      expect(ArchiveExtensions::CompareUsers.calculate_language_similarity(user_a: "user_a", user_b: "user_b")).to eq(0.0)
     end
   end
 end
