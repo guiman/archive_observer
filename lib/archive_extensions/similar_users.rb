@@ -1,8 +1,9 @@
 module ArchiveExtensions
   class SimilarUsers
-    def self.calculate(login: , language_threshold: 80.0, activity_threshold: 20, year: Time.now.year)
+    def self.calculate(login: , language_threshold: 80.0, activity_threshold: 20.0, year: Time.now.year)
       # 1st find users that he is connected to (by the repos he contributes to)
       # 2nd calculate the language difference to those users
+      # 3nd calculate the activity difference to those users
       # If the calculated difference is above a certain threshold
       # then add them to the results
       ArchiveExtensions::TopContributedRepositories.for(login: login, count: 5).map do |contributed_repo|
