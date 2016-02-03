@@ -11,13 +11,13 @@ class Api::UsersController < ApplicationController
   def similar_users
     @user = find_user
     @year = year_to_display
-    language_threshold = params[:language_threshold].present? ? params[:language_threshold].to_f : 60.0
-    activity_threshold = params[:activity_threshold].present? ? params[:activity_threshold].to_f : 20.0
+    @language_threshold = params[:language_threshold].present? ? params[:language_threshold].to_f : 60.0
+    @activity_threshold = params[:activity_threshold].present? ? params[:activity_threshold].to_f : 20.0
     @similar_users = ArchiveExtensions::SimilarUsers.calculate(
       login: @user.login,
       year: @year,
-      language_threshold: language_threshold,
-      activity_threshold: activity_threshold).map { |user| user.login }
+      language_threshold: @language_threshold,
+      activity_threshold: @activity_threshold).map { |user| user.login }
 
     render :missing, :status => 422 unless @user
   end

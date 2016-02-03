@@ -11,7 +11,7 @@ module ArchiveExtensions
           language_similarity = ArchiveExtensions::CompareUsers.calculate_language_similarity(user_a: login, user_b: contributor.login)
           activity_difference = ArchiveExtensions::CompareUsers.calculate_activity_difference(user_a: login, user_b: contributor.login, year: year)
           contributor.login != login &&
-            language_similarity <= language_threshold &&
+            language_similarity >= language_threshold &&
             activity_difference <= activity_threshold
         end
       end.flatten.uniq { |user| user.login }
