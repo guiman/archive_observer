@@ -15,7 +15,7 @@
 <h3>Similar developers</h3>
 <ul>
   <% ArchiveExtensions::SimilarUsers.calculate(login: @user.login, year: @year, language_threshold: 60.0, activity_threshold: 20.0).each do |user| %>
-    <li><%= link_to user.login, github_user_profile_path(user.login) %></li>
+    <li><%= link_to user.login, github_user_profile_path(user.login, year: @year) %></li>
   <% end %>
 </ul>
 
