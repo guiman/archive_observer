@@ -27,6 +27,11 @@
       <th>Repositories</th>
       <td><%= number_with_delimiter(GithubRepository.count) %></td>
     </tr>
+
+    <tr>
+      <th>Push Data</th>
+      <td><%= number_with_delimiter(GithubPush.count) %></td>
+    </tr>
   </table>
 
   <br>

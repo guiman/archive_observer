@@ -33,10 +33,12 @@ module ArchiveObserver
     config.active_record.raise_in_transactional_callbacks = true
 
     config.autoload_paths += Dir["#{config.root}/lib/archive_extensions/**/"]
+    config.autoload_paths += Dir["#{config.root}/lib/loading_strategy/**/*"]
     config.autoload_paths += Dir["#{config.root}/lib/chart/**/"]
 
     require_relative '../lib/archive_extensions'
     require_relative '../lib/archive_loader'
+    require_relative '../lib/loading_strategy'
     require_relative '../lib/archive_user_location'
     require_relative '../lib/linkedin_profile'
     require_relative '../lib/chart'
