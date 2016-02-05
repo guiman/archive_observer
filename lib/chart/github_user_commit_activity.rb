@@ -19,7 +19,7 @@ module Chart
     #  [ "dicember", 2 ],
     # ]
     def monthly_language_activity
-      months = Date::MONTHNAMES
+      months = Date::MONTHNAMES.compact
       activity = ArchiveExtensions::UserActivity.commits_for(login: @github_login, year: @year_to_display)
 
       months.zip(activity)
