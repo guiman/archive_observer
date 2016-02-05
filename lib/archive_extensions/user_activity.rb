@@ -1,6 +1,6 @@
 module ArchiveExtensions
   class UserActivity
-    def self.for(login:, year: Time.now.year)
+    def self.pr_for(login:, year: Time.now.year)
       user = GithubUser.find_by_login(login)
 
       results = GithubUser.connection.select_all("
@@ -14,6 +14,23 @@ module ArchiveExtensions
       (1..12).to_a.map do |month|
         value = results.detect { |result| result.fetch("month").to_i == month }
         value ? value.fetch("prs").to_i : 0
+      end
+    end
+
+    def self.commits_for(login:, year: Time.now.year)
+      user = GithubUser.find_by_login(login)
+
+      results = GithubUser.connection.select_all("
+        SELECT sum(github_pushes.commit_count) as commits, Extract(month from github_pushes.event_timestamp) as month
+        FROM github_users
+        INNER JOIN github_pushes on github_pushes.github_user_id = github_users.id
+        WHERE github_pushes.github_user_id = #{user.id} AND Extract(year from github_pushes.event_timestamp) = '#{year}'
+        GROUP BY month
+        ORDER BY month asc")
+
+      (1..12).to_a.map do |month|
+        value = results.detect { |result| result.fetch("month").to_i == month }
+        value ? value.fetch("commits").to_i : 0
       end
     end
   end

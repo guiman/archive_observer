@@ -17,8 +17,8 @@ module ArchiveExtensions
     end
 
     def self.calculate_activity_difference(user_a:, user_b:, year: Time.now.year)
-      user_a_activity = ArchiveExtensions::UserActivity.for(login: user_a, year: year)
-      user_b_activity = ArchiveExtensions::UserActivity.for(login: user_b, year: year)
+      user_a_activity = ArchiveExtensions::UserActivity.pr_for(login: user_a, year: year)
+      user_b_activity = ArchiveExtensions::UserActivity.pr_for(login: user_b, year: year)
 
       abs_mean_difference = (user_a_activity.mean - user_b_activity.mean).abs
       max_mean = [user_a_activity.mean, user_b_activity.mean].max
