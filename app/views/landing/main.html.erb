@@ -1,60 +1,35 @@
-<h1>Archive Observer</h1>
-
-<p>
-  Welcome!<br><br>
-
+<p class="lead text-justify">
   This is Archive Observer, a weekend project that started to do some research on
   <a href="https://www.githubarchive.org/">Github Archive</a> data and how we can
-  use it to build insight on development in general.<br>
-
+  use it to build insight on development in general.<br><br>
   Each hour we parse the latest Github Archive and refresh our database. So you should
-  expect new data every hour!<br>
+  expect new data every hour!<br><br>
 
-  <strong>I've started work on October, so please bear with me until I can catchup with previouse months</strong><br>
-
-  <table>
-    <tr>
-      <th>Pull Requests</th>
-      <td><%= number_with_delimiter(GithubPullRequest.count) %></td>
-    </tr>
-
-    <tr>
-      <th>Users</th>
-      <td><%= number_with_delimiter(GithubUser.count) %></td>
-    </tr>
-
-    <tr>
-      <th>Repositories</th>
-      <td><%= number_with_delimiter(GithubRepository.count) %></td>
-    </tr>
-
-    <tr>
-      <th>Push Data</th>
-      <td><%= number_with_delimiter(GithubPush.count) %></td>
-    </tr>
-  </table>
-
-  <br>
-  Some of features we currently have:
-  <ul>
-    <li><%= link_to "Top 100 repositories", top_repositories_path(100) %></li>
-    <li><%= link_to "Top 100 users", top_users_path(100) %></li>
-    <li>Top repositories filtered by language, like <%= link_to "Ruby", top_repositories_path(100, language: "ruby") %></li>
-    <li>For each user</li>
-    <ul>
-      <li>Languages</li>
-      <li>Top 5 repos</li>
-      <li>Activity this year broken down by language</li>
-    </ul>
-  </ul>
-
-  Try finding someone here by github login:<br>
-  <%= form_for GithubUser.new, url: {action: "user_profile"}, method: "get" do |form| %>
-    <%= form.text_field :login %>
-    <input name="commit" type="submit" value="Show Profile" />
-  <% end %>
-  <br>
-
-  Contributions are calculated by identifying PRs being opened by users, and languages
+  <strong>Note:</strong> contributions are calculated by identifying PRs being opened by users, and languages
   are identified by using the language determined as the main one for each repository.
 </p>
+
+<p class="text-center">
+  <mark>I've started work on October 2015, so please bear with me until I can catchup with data</mark>
+</p>
+<ul class="list-group">
+  <li class="list-group-item">
+    <span class="badge"><%= number_with_delimiter(GithubPullRequest.count) %></span>
+    Pull Requests
+  </li>
+
+  <li class="list-group-item">
+    <span class="badge"><%= number_with_delimiter(GithubUser.count) %></span>
+    Users
+  </li>
+
+  <li class="list-group-item">
+    <span class="badge"><%= number_with_delimiter(GithubRepository.count) %></span>
+    Repository
+  </li>
+
+  <li class="list-group-item">
+    <span class="badge"><%= number_with_delimiter(GithubPush.count) %></span>
+    Push data
+  </li>
+</ul>
