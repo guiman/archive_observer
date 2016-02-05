@@ -6,10 +6,15 @@ namespace :archiver do
   end
 
   desc "load archive into database"
-  task :load_archive => :environment do |t, args|
-    date = Date.today
-    hour = (Time.now - 2.hour).strftime('%H')
-    date_and_hour = "#{date}-#{hour}"
+  task :load_archive, [:date_and_hour] => :environment do |t, args|
+    if args[:date_and_hour]
+      date_and_hour = args[:date_and_hour]
+    else
+      date = Date.today
+      hour = (Time.now - 2.hour).strftime('%H')
+      date_and_hour = "#{date}-#{hour}"
+    end
+
     ArchiveLoader.perform(date_and_hour)
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204200916) do
+ActiveRecord::Schema.define(version: 20160205062607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,9 +39,11 @@ ActiveRecord::Schema.define(version: 20160204200916) do
     t.integer  "github_repository_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "github_user_id"
   end
 
   add_index "github_pushes", ["github_repository_id"], name: "index_github_pushes_on_github_repository_id", using: :btree
+  add_index "github_pushes", ["github_user_id"], name: "index_github_pushes_on_github_user_id", using: :btree
 
   create_table "github_repositories", force: :cascade do |t|
     t.string   "full_name"
@@ -80,6 +82,7 @@ ActiveRecord::Schema.define(version: 20160204200916) do
   add_foreign_key "github_pull_requests", "github_repositories"
   add_foreign_key "github_pull_requests", "github_users"
   add_foreign_key "github_pushes", "github_repositories"
+  add_foreign_key "github_pushes", "github_users"
   add_foreign_key "github_repositories", "languages"
 
   execute <<-SQL

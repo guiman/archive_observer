@@ -22,7 +22,7 @@ module LoadingStrategy
       end
 
       def push_data
-        PushHandler.new(@data, repository)
+        PushHandler.new(@data, repository, user)
       end
 
       def pull_request
