@@ -2,7 +2,10 @@
 
 <%= render partial: "languages", locals: { chart: Chart::GithubUserTopLanguages.new(@user.login).chart } %>
 
-<h2><%= @year %> specific data</h2>
+<div class="page-header">
+  <h2><%= @year %> specific data <small> Or switch to <%= link_to @alternative_year, github_user_profile_path(@user.login, year: @alternative_year)%></small></h2>
+</div>
+
 <%= render partial: "activity", locals: { user_activity: Chart::GithubUserActivity.new(@user.login, @year), user_commit_activity: Chart::GithubUserCommitActivity.new(@user.login, @year) } %>
 
 <h3>Top 5 Repositories</h3>
