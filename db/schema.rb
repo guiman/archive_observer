@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205062607) do
+ActiveRecord::Schema.define(version: 20160205064301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20160205062607) do
 
   add_index "github_pushes", ["github_repository_id"], name: "index_github_pushes_on_github_repository_id", using: :btree
   add_index "github_pushes", ["github_user_id"], name: "index_github_pushes_on_github_user_id", using: :btree
+  add_index "github_pushes", ["original_id"], name: "index_github_pushes_on_original_id", unique: true, using: :btree
 
   create_table "github_repositories", force: :cascade do |t|
     t.string   "full_name"
