@@ -14,7 +14,6 @@ class ArchiveLoader
     import_by_the_old_method(js)
 
     ArchiveExtensions::RepositoryRankingUpdate.update
-    ArchiveExtensions::UserRankingUpdate.update
   end
 
   def self.import_by_the_old_method(js)
