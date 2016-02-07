@@ -9,9 +9,27 @@
 <%= render partial: "activity", locals: { user_activity: Chart::GithubUserActivity.new(@user.login, @year), user_commit_activity: Chart::GithubUserCommitActivity.new(@user.login, @year) } %>
 
 <h3>Top 5 Repositories</h3>
+<h4>Based on PRs</h4>
 <ul>
-  <% ArchiveExtensions::TopContributedRepositories.for(login: @user.login, year: @year).each do |repo| %>
-    <li><%= link_to repo.fetch("repo").full_name, github_repository_path(repo.fetch("repo").id) %> - PR count: <%= repo.fetch("prs") %> </li>
+  <% top_5_prs_repos = ArchiveExtensions::TopContributedRepositories.pr_for(login: @user.login, year: @year) %>
+  <% if top_5_prs_repos.any? %>
+    <% top_5_prs_repos.each do |repo| %>
+      <li><%= link_to repo.fetch("repo").full_name, github_repository_path(repo.fetch("repo").id) %> - Commit count: <%= repo.fetch("prs") %> </li>
+    <% end %>
+  <% else %>
+    <li>Sorry we have no PR history</li>
+  <% end %>
+</ul>
+
+<h4>Based on Commits</h4>
+<ul>
+  <% top_5_commit_repos = ArchiveExtensions::TopContributedRepositories.commit_for(login: @user.login, year: @year) %>
+  <% if top_5_commit_repos.any? %>
+    <% top_5_commit_repos.each do |repo| %>
+      <li><%= link_to repo.fetch("repo").full_name, github_repository_path(repo.fetch("repo").id) %> - Commit count: <%= repo.fetch("commits") %> </li>
+    <% end %>
+  <% else %>
+    <li>Sorry we have no commit history</li>
   <% end %>
 </ul>
 

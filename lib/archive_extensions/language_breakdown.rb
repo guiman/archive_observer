@@ -1,6 +1,6 @@
 module ArchiveExtensions
   class LanguageBreakdown
-    def self.for(login:, language:, year: Time.now.year)
+    def self.pr_for(login:, language:, year: Time.now.year)
       language = Language.find_by_name(language)
       user = GithubUser.find_by_login(login)
 

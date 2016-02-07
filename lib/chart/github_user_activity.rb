@@ -52,7 +52,7 @@ module Chart
     def all_languages_monthly_activity
       languages.inject({}) do |acc, language|
         language_name = language.fetch("language").name
-        breakdown = ArchiveExtensions::LanguageBreakdown.for(login: @github_login, language: language_name, year: @year_to_display)
+        breakdown = ArchiveExtensions::LanguageBreakdown.pr_for(login: @github_login, language: language_name, year: @year_to_display)
         acc[language_name] = breakdown
         acc
       end

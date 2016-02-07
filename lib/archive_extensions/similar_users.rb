@@ -6,7 +6,7 @@ module ArchiveExtensions
       # 3nd calculate the activity difference to those users
       # If the calculated difference is above a certain threshold
       # then add them to the results
-      ArchiveExtensions::TopContributedRepositories.for(login: login, count: 5).map do |contributed_repo|
+      ArchiveExtensions::TopContributedRepositories.pr_for(login: login, count: 5).map do |contributed_repo|
         repo = contributed_repo.fetch("repo")
         repo.all_contributors.select do |contributor|
           language_similarity = ArchiveExtensions::CompareUsers.calculate_language_similarity(user_a: login, user_b: contributor.login)

@@ -25,7 +25,7 @@ class LandingController < ApplicationController
       true, "%#{@alternative_location}%").order("RANDOM()").limit(500).select do |user|
       lang_data = languages.inject({}) do |acc, language|
         language_name = language.name
-        breakdown = ArchiveExtensions::LanguageBreakdown.for(login: user.login, language: language_name)
+        breakdown = ArchiveExtensions::LanguageBreakdown.pr_for(login: user.login, language: language_name)
 
         acc[language_name] = breakdown.detect(Proc.new { Hash.new }) do |data|
           data.fetch("month") == current_month

@@ -23,7 +23,7 @@ describe "All language activity broken down by month related to a user" do
       { "month" => 3, "prs" => 3},
     ]
 
-    expect(ArchiveExtensions::LanguageBreakdown.for(
+    expect(ArchiveExtensions::LanguageBreakdown.pr_for(
       login: "user_a", language: "Ruby")).to eq(expected_result)
   end
 
@@ -60,7 +60,7 @@ describe "All language activity broken down by month related to a user" do
       { "month" => 3, "prs" => 3},
     ]
 
-    expect(ArchiveExtensions::LanguageBreakdown.for(
+    expect(ArchiveExtensions::LanguageBreakdown.pr_for(
       login: "user_a", language: "Ruby", year: 2016)).to eq(expected_result)
   end
 end
