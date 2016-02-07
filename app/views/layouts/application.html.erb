@@ -55,7 +55,6 @@
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
             <li><%= link_to "Top 100 repositories", top_repositories_path(100) %></li>
-            <li><%= link_to "Top 100 users", top_users_path(100) %></li>
           </ul>
 
           <%= form_for GithubUser.new, url: {action: "user_profile", controller: "landing"}, method: "get", html: { class: "navbar-form navbar-right" } do |form| %>

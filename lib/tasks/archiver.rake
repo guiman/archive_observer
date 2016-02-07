@@ -2,7 +2,6 @@ namespace :archiver do
   desc "update rankings"
   task :update_rankings => :environment do |t,args|
     ArchiveExtensions::RepositoryRankingUpdate.update
-    ArchiveExtensions::UserRankingUpdate.update
   end
 
   desc "load archive into database"

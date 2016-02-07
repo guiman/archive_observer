@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205171929) do
+ActiveRecord::Schema.define(version: 20160207192119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,15 +94,5 @@ ActiveRecord::Schema.define(version: 20160205171929) do
         WHERE github_pull_requests.action = 'opened'
         GROUP BY github_repositories.id
         ORDER BY pull_request_count desc
-  SQL
-
-  execute <<-SQL
-    CREATE MATERIALIZED VIEW user_rankings AS
-      SELECT github_users.id as github_user_id, count(github_pull_requests.id) as pull_request_count
-      FROM github_users
-      INNER JOIN github_pull_requests on github_pull_requests.github_user_id = github_users.id
-      WHERE github_pull_requests.action = 'opened'
-      GROUP BY github_users.id
-      ORDER BY pull_request_count desc
   SQL
 end
