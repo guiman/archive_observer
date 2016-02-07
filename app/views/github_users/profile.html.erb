@@ -14,7 +14,7 @@
   <% top_5_prs_repos = ArchiveExtensions::TopContributedRepositories.pr_for(login: @user.login, year: @year) %>
   <% if top_5_prs_repos.any? %>
     <% top_5_prs_repos.each do |repo| %>
-      <li><%= link_to repo.fetch("repo").full_name, github_repository_path(repo.fetch("repo").id) %> - Commit count: <%= repo.fetch("prs") %> </li>
+      <li><%= link_to repo.fetch("repo").full_name, github_repository_path(repo.fetch("repo").id) %> - PR count: <%= repo.fetch("prs") %> </li>
     <% end %>
   <% else %>
     <li>Sorry we have no PR history</li>
