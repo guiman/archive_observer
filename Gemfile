@@ -6,6 +6,7 @@ gem 'rails', '4.2.2'
 gem 'rails_12factor'
 gem 'pg'
 gem 'uglifier', '>= 1.3.0'
+gem 'jquery-rails'
 
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
