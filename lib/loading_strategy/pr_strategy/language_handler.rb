@@ -15,6 +15,14 @@ module LoadingStrategy
       def sql
         TEMPLATE % { name: name }
       end
+
+      def create
+        @ar_object = Language.find_or_create_by(name: name)
+      end
+
+      def ar_object
+        @ar_object
+      end
     end
   end
 end

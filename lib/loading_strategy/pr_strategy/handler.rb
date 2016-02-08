@@ -27,7 +27,7 @@ module LoadingStrategy
       end
 
       def push_data
-        OpenStruct.new(sql: nil)
+        OpenStruct.new(sql: nil, create: nil)
       end
     end
   end

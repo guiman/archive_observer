@@ -14,6 +14,14 @@ module LoadingStrategy
       def sql
         TEMPLATE % { login: login }
       end
+
+      def create
+        @ar_object = GithubUser.find_or_create_by(login: login)
+      end
+
+      def ar_object
+        @ar_object
+      end
     end
   end
 end

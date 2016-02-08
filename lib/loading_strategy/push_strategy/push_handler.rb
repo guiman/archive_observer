@@ -31,6 +31,13 @@ module LoadingStrategy
           event_timestamp: event_timestamp
         }
       end
+
+      def create
+        @ar_object = GithubPush.create(commit_count: commit_count, original_id: original_id,
+          github_user: user.ar_object, github_repository: repository.ar_object)
+      rescue ActiveRecord::RecordNotUnique
+        @ar_object = GithubPush.find_by(original_id: original_id)
+      end
     end
   end
 end

@@ -24,6 +24,17 @@ module LoadingStrategy
           repository_language: language.name
         }
       end
+
+      def create
+        @ar_object = GithubRepository.create(fork: forked, full_name: full_name,
+          language: language.ar_object)
+      rescue ActiveRecord::RecordNotUnique
+        @ar_object = GithubRepository.find_by(full_name: full_name)
+      end
+
+      def ar_object
+        @ar_object
+      end
     end
   end
 end

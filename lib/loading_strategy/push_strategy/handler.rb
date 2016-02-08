@@ -10,7 +10,7 @@ module LoadingStrategy
       end
 
       def language
-        OpenStruct.new(sql: nil)
+        OpenStruct.new(sql: nil, create: nil)
       end
 
       def user
@@ -26,7 +26,7 @@ module LoadingStrategy
       end
 
       def pull_request
-        OpenStruct.new(sql: nil)
+        OpenStruct.new(sql: nil, create: nil)
       end
     end
   end
