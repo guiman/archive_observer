@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   root "landing#main"
   get "/find_user_profile" => "landing#user_profile"
-  get "/monthly_selection" => "landing#monthly_selection"
-
   get "/user/profile/:login" => "github_users#profile", as: "github_user_profile"
 
   get "/repositories/top/:count" => "github_repositories#top", as: "top_repositories"
