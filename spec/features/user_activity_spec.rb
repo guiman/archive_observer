@@ -58,7 +58,7 @@ describe ArchiveExtensions::UserActivity do
           end
         end
 
-        expected_result = [1,3,6,0,0,0,0,0,0,0,0,0]
+        expected_result = [1,2,3,0,0,0,0,0,0,0,0,0]
         expect(described_class.commits_for(login: "guiman")).to eq(expected_result)
       end
     end

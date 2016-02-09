@@ -21,7 +21,7 @@ module ArchiveExtensions
       user = GithubUser.find_by_login(login)
 
       results = GithubUser.connection.select_all("
-        SELECT sum(github_pushes.commit_count) as commits, Extract(month from github_pushes.event_timestamp) as month
+        SELECT count(github_pushes.id) as commits, Extract(month from github_pushes.event_timestamp) as month
         FROM github_users
         INNER JOIN github_pushes on github_pushes.github_user_id = github_users.id
         WHERE github_pushes.github_user_id = #{user.id} AND Extract(year from github_pushes.event_timestamp) = '#{year}'
