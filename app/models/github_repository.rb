@@ -16,8 +16,11 @@ class GithubRepository < ActiveRecord::Base
   end
 
   def all_contributors
-    RepositoryContributors.
-      where("repository_contributors.full_name LIKE '%/#{self.partial_name}'").
-      order("prs desc")
+    GithubUser.joins(pull_requests: :github_repository).
+      select("github_users.login, count(github_pull_requests.id) as prs, github_repositories.id").
+      where("github_repositories.full_name LIKE '%/#{self.partial_name}'").
+      group("github_users.login, github_repositories.id").
+      order("prs desc").
+      distinct
   end
 end
