@@ -43,8 +43,37 @@ module ArchiveExtensions
     end
 
     def self.calculate_activity_difference(user_a:, user_b:, year: Time.now.year)
-      user_a_activity = ArchiveExtensions::UserActivity.pr_for(login: user_a, year: year)
-      user_b_activity = ArchiveExtensions::UserActivity.pr_for(login: user_b, year: year)
+      user_a_id = GithubUser.find_by(login: user_a).id
+      user_b_id = GithubUser.find_by(login: user_b).id
+
+      user_ids = [user_a_id, user_b_id].join(',')
+
+      results = GithubUser.connection.select_all("
+        SELECT github_pull_requests.github_user_id as user_id, count(github_pull_requests.id) as prs, Extract(month from github_pull_requests.event_timestamp) as month
+        FROM github_users
+        INNER JOIN github_pull_requests on github_pull_requests.github_user_id = github_users.id
+        WHERE github_pull_requests.github_user_id in (#{user_ids}) AND github_pull_requests.action = 'opened' AND Extract(year from github_pull_requests.event_timestamp) = '#{year}'
+        GROUP BY github_pull_requests.github_user_id, month
+        ORDER BY month asc")
+
+      data = results.inject([]) do |acc, result|
+        pr_count = result.fetch("prs")
+        acc << {
+          "user_id" => result.fetch("user_id").to_i,
+          "month" => result.fetch("month").to_i,
+          "prs" => pr_count.to_i
+        }
+      end
+
+      user_a_activity = (1..12).to_a.map do |month|
+        value = data.detect { |user_data| user_data.fetch("month") == month && user_data.fetch("user_id") == user_a_id }
+        value ? value.fetch("prs").to_i : 0
+      end
+
+      user_b_activity = (1..12).to_a.map do |month|
+        value = data.detect { |user_data| user_data.fetch("month") == month && user_data.fetch("user_id") == user_b_id }
+        value ? value.fetch("prs").to_i : 0
+      end
 
       abs_mean_difference = (user_a_activity.mean - user_b_activity.mean).abs
       max_mean = [user_a_activity.mean, user_b_activity.mean].max

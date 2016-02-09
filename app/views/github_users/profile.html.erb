@@ -32,3 +32,15 @@
     <li>Sorry we have no commit history</li>
   <% end %>
 </ul>
+
+<h3>Similar Developers</h3>
+<ul>
+  <% similar_devs = ArchiveExtensions::SimilarUsers.calculate(login: @user.login, year: @year) %>
+  <% if similar_devs.any? %>
+    <% similar_devs.each do |user| %>
+      <li><%= link_to user.login, github_user_profile_path(user.login, year: @year) %></li>
+    <% end %>
+  <% else %>
+    <li>Could not find any similar devs.</li>
+  <% end %>
+</ul>
