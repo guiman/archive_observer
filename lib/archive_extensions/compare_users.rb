@@ -4,7 +4,7 @@ module ArchiveExtensions
   class CompareUsers
     COMPARED_LANGUAGES = 4
 
-    def self.calculate_language_similarity_new(user_a:, user_b:)
+    def self.calculate_language_similarity(user_a:, user_b:)
       user_a_id = GithubUser.find_by(login: user_a).id
       user_b_id = GithubUser.find_by(login: user_b).id
 
@@ -35,18 +35,6 @@ module ArchiveExtensions
       user_b_languages = data.map do |some_data|
         some_data.fetch("language") if some_data.fetch("user_id") == user_b_id
       end.compact.first(COMPARED_LANGUAGES)
-
-      whole_list_of_languages = (user_a_languages | user_b_languages).count
-      language_intersection = (user_a_languages & user_b_languages).count
-
-      language_intersection.to_f / whole_list_of_languages.to_f * 100.to_f
-    end
-
-    def self.calculate_language_similarity(user_a:, user_b:)
-      user_a_languages = ArchiveExtensions::Languages.for(user_a).
-        first(COMPARED_LANGUAGES).map {|x| x.fetch("language").name }
-      user_b_languages = ArchiveExtensions::Languages.for(user_b).
-        first(COMPARED_LANGUAGES).map {|x| x.fetch("language").name }
 
       whole_list_of_languages = (user_a_languages | user_b_languages).count
       language_intersection = (user_a_languages & user_b_languages).count
