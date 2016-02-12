@@ -35,7 +35,6 @@ class ArchiveLoader
     languages_list = []
     repository_list = []
     pr_list = []
-    push_list = []
 
     Yajl::Parser.parse(js) do |event|
       next unless LoadingStrategy::Chooser.can_be_parsed?(event)
@@ -45,7 +44,6 @@ class ArchiveLoader
       languages_list << strategy.language
       repository_list << strategy.repository
       pr_list << strategy.pull_request
-      push_list << strategy.push_data
     end
 
     users = user_list.map { |user| user.login }.uniq
@@ -86,17 +84,6 @@ class ArchiveLoader
     pr_inserts = pr_list.map { |pr| !existing_prs.include?(pr.original_id) ? pr.sql : nil }
 
     pr_inserts.compact.each do |insert|
-      begin
-        ActiveRecord::Base.connection.execute(insert)
-      rescue ActiveRecord::RecordNotUnique
-      end
-    end
-
-    pushes = push_list.map { |push| push.original_id }.uniq
-    existing_pushes = GithubPush.where(original_id: pushes).pluck(:original_id)
-    push_inserts = push_list.map { |push| !existing_pushes.include?(push.original_id) ? push.sql : nil }
-
-    push_inserts.compact.each do |insert|
       begin
         ActiveRecord::Base.connection.execute(insert)
       rescue ActiveRecord::RecordNotUnique

@@ -24,6 +24,7 @@ gem 'octokit'
 gem 'open_uri_redirections'
 gem 'descriptive_statistics', '~> 2.4.0', :require => 'descriptive_statistics/safe'
 gem 'twitter-bootstrap-rails'
+gem 'bigquery'
 
 group :development, :test do
   gem 'byebug'

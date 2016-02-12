@@ -11,8 +11,7 @@ module LoadingStrategy
 
     def self.can_be_parsed?(event)
       (event.fetch("type") == "PullRequestEvent" &&
-        event.fetch("payload").fetch("action") == "opened") ||
-      (event.fetch("type") == "PushEvent")
+        event.fetch("payload").fetch("action") == "opened")
     end
 
     def self.from_event(event)
